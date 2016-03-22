@@ -1,30 +1,30 @@
-#
-# Nginx Dockerfile
-#
-# https://github.com/dockerfile/nginx
-# VERISON FOR DEMO 
+FROM node
 
-# Pull base image.
-FROM ubuntu-master
+RUN mkdir /src
+WORKDIR /src
 
-# Install Nginx.
-RUN \
-  add-apt-repository -y ppa:nginx/stable && \
-  apt-get update && \
-  apt-get install -y nginx && \
-  rm -rf /var/lib/apt/lists/* && \
-  echo "\ndaemon off;" >> /etc/nginx/nginx.conf && \
-  chown -R www-data:www-data /var/lib/nginx
+#RUN apt-get update 
+#RUN apt-get install -y zip
 
-# Define mountable directories.
-VOLUME ["/etc/nginx/sites-enabled", "/etc/nginx/certs", "/etc/nginx/conf.d", "/var/log/nginx", "/var/www/html"]
+#RUN wget https://circle-artifacts.com/gh/piyushcoolkarni/AngularNodeDocker2Frontend2/18/artifacts/0/tmp/circle-artifacts.8MqfYYM/nodemod/nodemodules.zip 
+#RUN unzip nodemodules.zip -d /node_modules
+#RUN ls -a /node_modules
 
-# Define working directory.
-WORKDIR /etc/nginx
 
-# Define default command.
-CMD ["nginx"]
+#RUN npm install -g grunt-cli
+#RUN npm install -g gulp-cli
+#RUN npm install gulp
+#RUN npm install grunt
+#RUN npm install -g gulp
 
-# Expose ports.
-EXPOSE 80
-EXPOSE 443
+
+ADD html html
+#ADD models models
+#ADD node_modules node_modules
+#ADD test test
+ADD package.json app.js ./
+RUN npm install
+
+CMD ["node","app.js"]
+
+EXPOSE 3010
